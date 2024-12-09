@@ -9,7 +9,6 @@ import { FormTextInput } from '../TextInput';
 import I18n from '../../i18n';
 import EventEmitter from '../../lib/methods/helpers/events';
 import { useTheme } from '../../theme';
-import { themes } from '../../lib/constants';
 import Button from '../Button';
 import sharedStyles from '../../views/Styles';
 import styles from './styles';
@@ -58,7 +57,7 @@ const TwoFactor = React.memo(() => {
 	const { isMasterDetail } = useAppSelector(state => ({
 		isMasterDetail: state.app.isMasterDetail
 	}));
-	const { theme } = useTheme();
+	const { colors } = useTheme();
 	const [visible, setVisible] = useState(false);
 	const [data, setData] = useState<EventListenerMethod>({});
 	const [code, setCode] = useState<string>('');
@@ -106,10 +105,15 @@ const TwoFactor = React.memo(() => {
 		setData({});
 	};
 
-	const color = themes[theme].fontTitlesLabels;
+	const color = colors.fontTitlesLabels;
 	return (
 		<Modal
-			accessibilityLabel={I18n.t('Close_Modal')}
+			customBackdrop={
+				<View
+					accessible
+					accessibilityLabel={I18n.t('Close_Modal')}
+					style={[styles.overlay, { backgroundColor: colors.overlayBackground }]}></View>
+			}
 			avoidKeyboard
 			useNativeDriver
 			isVisible={visible}
@@ -119,7 +123,7 @@ const TwoFactor = React.memo(() => {
 					style={[
 						styles.content,
 						isMasterDetail && [sharedStyles.modalFormSheet, styles.tablet],
-						{ backgroundColor: themes[theme].surfaceTint }
+						{ backgroundColor: colors.surfaceTint }
 					]}>
 					<View
 						accessibilityLabel={`${method?.text ? I18n.t(method.text) : I18n.t(method?.title || 'Two_Factor_Authentication')}`}>
