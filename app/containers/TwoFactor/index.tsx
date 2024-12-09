@@ -144,7 +144,6 @@ const TwoFactor = React.memo(() => {
 							small
 							title={I18n.t('Resend_email')}
 							style={[styles.button, { marginTop: 12 }]}
-							styleText={styles.resendEmailText}
 							type='secondary'
 							onPress={sendEmail}
 						/>
